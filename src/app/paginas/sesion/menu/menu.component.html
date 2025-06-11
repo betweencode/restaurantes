@@ -1,0 +1,139 @@
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <div
+    class="sidebar-transition bg-gradient-to-b from-indigo-800 to-purple-800 text-white"
+    [ngClass]="isSidebarOpen ? 'w-64' : 'w-20'"
+  >
+    <!-- Sidebar header -->
+    <div class="flex items-center justify-between p-4 border-b border-indigo-700">
+      <div class="flex items-center space-x-2" *ngIf="isSidebarOpen">
+        <svg class="w-8 h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        <span class="text-xl font-bold">Dashboard</span>
+      </div>
+      <button
+        (click)="toggleSidebar()"
+        class="p-1 rounded-full hover:bg-indigo-700 focus:outline-none"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path *ngIf="isSidebarOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          <path *ngIf="!isSidebarOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Sidebar content -->
+    <div class="py-4">
+      <ul>
+        <li *ngFor="let item of menuItems" class="mb-1">
+          <!-- Menu item -->
+          <a
+            [routerLink]="item.hasSubmenu ? null : item.route"
+            (click)="item.hasSubmenu ? toggleSubmenu(item) : setActiveItem(item)"
+            class="flex items-center px-4 py-3 cursor-pointer menu-item"
+            [ngClass]="{
+              'bg-indigo-700 text-white active-menu-item': item.isActive,
+              'hover:bg-indigo-700/50': !item.isActive
+            }"
+          >
+            <!-- Icon -->
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="item.icon"></path>
+            </svg>
+
+            <!-- Text and arrow -->
+            <div *ngIf="isSidebarOpen" class="flex justify-between items-center w-full ml-3">
+              <span>{{ item.name }}</span>
+              <svg
+                *ngIf="item.hasSubmenu"
+                class="w-4 h-4 transition-transform duration-200 ease-in-out"
+                [ngClass]="{'rotate-180': item.isSubmenuOpen}"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </a>
+
+          <!-- Submenu -->
+          <div
+            *ngIf="item.hasSubmenu && isSidebarOpen"
+            class="overflow-hidden bg-indigo-900/50 submenu-enter-active"
+            [ngClass]="{'max-h-0 opacity-0': !item.isSubmenuOpen, 'max-h-60 opacity-100': item.isSubmenuOpen}"
+          >
+            <ul class="py-2">
+              <li *ngFor="let subItem of item.submenuItems">
+                <a
+                  [routerLink]="subItem.route"
+                  class="flex items-center pl-12 py-2 text-sm text-indigo-100 hover:bg-indigo-800 menu-item"
+                >
+                  <span class="w-2 h-2 mr-2 bg-indigo-400 rounded-full"></span>
+                  {{ subItem.name }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="flex-1 overflow-auto">
+    <!-- Top navbar -->
+    <div class="bg-white shadow-md p-4 flex justify-between items-center">
+      <div class="flex items-center">
+        <button
+          (click)="toggleSidebar()"
+          class="p-2 mr-4 rounded-md hover:bg-gray-100 focus:outline-none lg:hidden"
+        >
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+        <h1 class="text-xl font-semibold text-gray-800">Welcome to Dashboard</h1>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <!-- Search -->
+        <div class="relative hidden md:block">
+          <input
+            type="text"
+            placeholder="Search..."
+            class="w-64 pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          >
+          <svg class="w-5 h-5 text-gray-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+
+        <!-- Notifications -->
+        <button class="p-2 rounded-full hover:bg-gray-100 focus:outline-none relative">
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+          </svg>
+          <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full notification-dot"></span>
+        </button>
+
+        <!-- Profile -->
+        <div class="flex items-center space-x-2">
+          <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold">
+            JD
+          </div>
+          <span class="hidden md:inline text-gray-700">John Doe</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="p-6">
+      <div class="glass-card p-6 rounded-xl">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
