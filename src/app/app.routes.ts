@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
-import { TailwindTestComponent } from './tailwind-test.component';
+import {LoginComponent} from './paginas/sinsesion/login/login.component';
+import {NofoundComponent} from './paginas/sinsesion/nofound/nofound.component';
+
 
 export const routes: Routes = [
-  { path: '', component: TailwindTestComponent }
+  {path: '', component: LoginComponent},
+  {path: 'login', component: LoginComponent},
+  {path: '**', component: NofoundComponent}
 ];
