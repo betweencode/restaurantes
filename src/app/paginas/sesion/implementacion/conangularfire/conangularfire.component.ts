@@ -1,7 +1,9 @@
 import {Component, inject} from '@angular/core';
-import {JsonPipe} from "@angular/common";
+import {JsonPipe, NgClass} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { Database, onValue, ref, set } from '@angular/fire/database';
+import { Auth,signInWithEmailAndPassword,signOut } from '@angular/fire/auth';
+
 
 
 
@@ -10,18 +12,26 @@ import { Database, onValue, ref, set } from '@angular/fire/database';
   imports: [
     JsonPipe,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgClass
   ],
   templateUrl: './conangularfire.component.html',
   styleUrl: './conangularfire.component.scss'
 })
 export class ConangularfireComponent {
+
+  private auth = inject(Auth);
+
+
   texto: string = "";
 
 
   recuperado:any;
 
   private database = inject(Database);
+  email: any;
+  password: any;
+  isCollapsed: boolean = true;
 
 
 
@@ -50,5 +60,19 @@ export class ConangularfireComponent {
 
       this.recuperado = data;
     });
+  }
+
+  login() {
+    signInWithEmailAndPassword(this.auth,this.email,this.password).then(datos =>{
+      console.log(datos);
+    }).catch(error =>{
+      console.error(error);
+    })
+  }
+
+  logout() {
+    signOut(this.auth).then(datos =>{
+      console.log(datos);
+    }).catch(error =>{console.error(error);});
   }
 }

@@ -2,14 +2,18 @@ import {Component, OnInit} from '@angular/core';
 import { Database, getDatabase,ref, set,onValue} from "firebase/database";
 import {appfirebasenormal} from '../../../../app.component';
 import {FormsModule} from '@angular/forms';
-import {JsonPipe} from '@angular/common';
+import {JsonPipe, NgClass} from '@angular/common';
+import { getAuth, signInWithEmailAndPassword,signOut } from "firebase/auth";
+
+
 
 
 @Component({
   selector: 'app-normal',
   imports: [
     FormsModule,
-    JsonPipe
+    JsonPipe,
+    NgClass
   ],
   templateUrl: './normal.component.html',
   styleUrl: './normal.component.scss',
@@ -17,11 +21,17 @@ import {JsonPipe} from '@angular/common';
 })
 export class NormalComponent implements OnInit {
   texto: string = "";
+  private auth = getAuth();
 
 
   recuperado:any;
 
   database!: Database;
+
+
+  email: any;
+  password: any;
+  isCollapsed: boolean = true;
 
     ngOnInit(): void {
       this.database = getDatabase(appfirebasenormal);
@@ -44,5 +54,19 @@ export class NormalComponent implements OnInit {
 
       this.recuperado = data;
     });
+  }
+  login() {
+      console.log("Autenticacion con angular normal!!..")
+    signInWithEmailAndPassword(this.auth,this.email,this.password).then(datos =>{
+      console.log(datos);
+    }).catch(error =>{
+      console.error(error);
+    })
+  }
+
+  logout() {
+    signOut(this.auth).then(datos =>{
+      console.log(datos);
+    }).catch(error =>{console.error(error);});
   }
 }

@@ -1,6 +1,37 @@
 <h1 class="text-2xl font-bold mb-4 p-4">Angular Fire</h1>
-<div class="flex items-center space-x-4 p-4">
-  <input type="text"
+
+<button (click)="isCollapsed = !isCollapsed"
+        class="mb-4 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+  {{ isCollapsed ? 'Mostrar' : 'Ocultar' }} autenticación con angular fire
+</button>
+
+<div [ngClass]="{'hidden': isCollapsed}">
+
+  <div class="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md mb-6">
+    <div class="space-y-4">
+      <input type="email" [(ngModel)]="email" placeholder="Email"
+             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      <input type="password" [(ngModel)]="password" placeholder="Contraseña"
+             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      <div class="flex space-x-4">
+        <button (click)="login()"
+                class="flex-1 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+          Iniciar Sesión
+        </button>
+        <button (click)="logout()"
+                class="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  class="transition-all duration-300">
+
+  <div class="flex items-center space-x-4 p-4">
+    <label class="block text-sm font-medium text-gray-700 mb-2">Consulta y guardado en firebase realdatabase:</label>
+    <input type="text"
          [(ngModel)]="texto"
 
          class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -20,5 +51,6 @@
     <!-- Aquí se mostrarán los datos -->
     {{recuperado | json}}
   </div>
+</div>
 </div>
 
