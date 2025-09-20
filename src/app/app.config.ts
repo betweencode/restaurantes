@@ -6,6 +6,7 @@ import { routes } from './app.routes';
 import { provideFirebaseApp, initializeApp, } from '@angular/fire/app';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import {provideHttpClient} from '@angular/common/http';
 
 
 
@@ -21,6 +22,8 @@ export const appConfig: ApplicationConfig = {
     //Implementación con realdatabase...
     provideDatabase(() => getDatabase()),
     provideAuth(() => getAuth()),
+
+    provideHttpClient()
 
   ]
 };

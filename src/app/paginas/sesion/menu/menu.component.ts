@@ -36,7 +36,7 @@ export class MenuComponent {
       submenuItems: [
         { name: 'Implementacion normal firebase', route: '/dashboard/normal/libreria' },
         { name: 'Implementacion con libreria angular', route: '/dashboard/normal/libreriaangularfire' },
-        { name: 'Categories', route: '/products/categories' }
+        { name: 'Implementación personalizada (nuestro propio backend)', route: '/dashboard/normal/customtokenbackend' },
       ]
     },
     {
