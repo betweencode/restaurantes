@@ -1,6 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LoginService} from '../../../shared/servicios/login.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,8 @@ export class LoginComponent implements OnInit{
   public formGroup!:FormGroup;
 
   private fb:FormBuilder = inject(FormBuilder);
-
-  private loginPrd:LoginService = inject(LoginService);
+  private loginPrd: LoginService = inject(LoginService);
+  private router: Router = inject(Router);
 
 
   ngOnInit(): void {
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit{
 
       localStorage.setItem("usuario",JSON.stringify(datos.user));
       localStorage.setItem("providerId",''+datos.providerId);
-
+      this.router.navigate(['/dashboard']);
 
 
     }).catch(error =>{

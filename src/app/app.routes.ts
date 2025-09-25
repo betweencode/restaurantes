@@ -7,12 +7,13 @@ import {ConangularfireComponent} from './paginas/sesion/implementacion/conangula
 import {
   CustomTokenBackendComponent
 } from './paginas/sesion/implementacion/custom-token-backend/custom-token-backend.component';
+import {logininiciosesion, seguridadGuard} from './shared/guard/seguridad.guard';
 
 
 export const routes: Routes = [
-  {path: '', component: LoginComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'dashboard', component: MenuComponent,children:[
+  {path: '', canActivate:[logininiciosesion], component: LoginComponent},
+  {path: 'login',canActivate:[logininiciosesion], component: LoginComponent},
+  {path: 'dashboard',canActivate:[seguridadGuard], component: MenuComponent,children:[
       {path:'normal/libreria',component:NormalComponent},
       {path:'normal/libreriaangularfire',component:ConangularfireComponent},
       {path:'normal/customtokenbackend',component:CustomTokenBackendComponent},

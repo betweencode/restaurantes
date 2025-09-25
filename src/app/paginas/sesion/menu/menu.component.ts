@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {RouterOutlet, RouterLink} from '@angular/router';
+import {RouterOutlet, RouterLink, Router} from '@angular/router';
 import {NgClass, NgIf, NgFor} from '@angular/common';
 
 @Component({
@@ -17,6 +17,9 @@ import {NgClass, NgIf, NgFor} from '@angular/common';
 })
 export class MenuComponent {
   isSidebarOpen = true;
+  isProfileMenuOpen = false;
+
+  constructor(private router: Router) {}
 
   // Menu items with submenus
   menuItems = [
@@ -105,5 +108,27 @@ export class MenuComponent {
     this.menuItems.forEach(menuItem => {
       menuItem.isActive = (menuItem === item);
     });
+  }
+
+  // Toggle profile menu
+  toggleProfileMenu() {
+    this.isProfileMenuOpen = !this.isProfileMenuOpen;
+  }
+
+  // Navigate to profile page
+  viewProfile() {
+    // Close the profile menu
+    this.isProfileMenuOpen = false;
+    // Navigate to profile page - update this route as needed
+    // this.router.navigate(['/profile']);
+    console.log('View profile clicked');
+  }
+
+  // Logout function
+  logout() {
+    // Close the profile menu
+    this.isProfileMenuOpen = false;
+    // Navigate to login page
+    this.router.navigate(['/login']);
   }
 }
